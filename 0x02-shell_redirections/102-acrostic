@@ -1,2 +1,0 @@
-#!/bin/bash
-cut -c1 | paaste -s | tr -d "[:blank:]"
