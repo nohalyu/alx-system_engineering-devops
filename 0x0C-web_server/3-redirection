@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Configure your Nginx server so that /redirect_me is redirecting to another page.
+
+# Requirements:
+
+#       The redirection must be a “301 Moved Permanently”
+#       You answer file should be a Bash script containing commands to automatically
+#                configure a Ubuntu machine to respect above requirements
+#       Using what you did with 1-install_nginx_web_server, write 3-redirection so 
+#                that it configures a brand new Ubuntu machine to the requirements asked in this task
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+# Creating an index.html page
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Performing a 301 Redirection
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/anyumbake permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+
+# Testing configurations for syntax errors
+sudo nginx -t
+
+# Restarting Nginx service
+sudo service nginx restart
